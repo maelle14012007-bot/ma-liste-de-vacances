@@ -1,36 +1,35 @@
-let data = {
+let defaultData = {
   valise: {
     title: "🧳 Valise",
-    items: ["👕 T-shirts", "🩳 Shorts", "🩱 Maillots de bain", "🧦 Chaussettes"]
+    items: ["👕 T-shirts","🩳 Shorts","🩱 Maillots de bain","🧦 Chaussettes"]
   },
   tente: {
     title: "⛺ Tente",
-    items: ["🏕️ Tente", "🛏️ Matelas", "🔦 Lampe"]
+    items: ["🏕️ Tente","🛏️ Matelas","🔦 Lampe"]
   },
   alimentaire: {
     title: "🍓 Alimentaire",
-    items: ["🥖 Pain", "🍫 Snacks", "🥤 Boissons"]
+    items: ["🥖 Pain","🍫 Snacks","🥤 Boissons"]
   },
   divers: {
     title: "🐚 Divers",
-    items: ["📱 Chargeur", "🧴 Crème solaire"]
+    items: ["📱 Chargeur","🧴 Crème solaire"]
   }
 };
 
+/* 🔑 charger / sauvegarder TOUT */
+function getData(){
+  let saved = localStorage.getItem("vac_data");
+  return saved ? JSON.parse(saved) : structuredClone(defaultData);
+}
+
+function saveData(data){
+  localStorage.setItem("vac_data", JSON.stringify(data));
+}
+
+/* 📦 données globales */
+let data = getData();
 let currentCat = "";
-
-/* 🔑 stockage */
-function getKey(cat){
-  return "vac_" + cat;
-}
-
-function load(cat){
-  return JSON.parse(localStorage.getItem(getKey(cat))) || {};
-}
-
-function save(cat, state){
-  localStorage.setItem(getKey(cat), JSON.stringify(state));
-}
 
 /* 📂 ouvrir catégorie */
 function openCategory(cat){
@@ -46,8 +45,7 @@ function openCategory(cat){
 
 /* 📋 afficher liste */
 function render(cat){
-  let state = load(cat);
-
+  let state = loadState(cat);
   let html = "";
 
   data[cat].items.forEach((item, i) => {
@@ -64,7 +62,7 @@ function render(cat){
   });
 
   html += `
-    <button onclick="addItem()">
+    <button onclick="addItem()" style="margin-top:15px;">
       ➕ Ajouter un objet
     </button>
   `;
@@ -72,12 +70,20 @@ function render(cat){
   document.getElementById("list").innerHTML = html;
 }
 
-/* ✅ cocher / décocher */
-function toggle(i){
-  let state = load(currentCat);
-  state[i] = !state[i];
-  save(currentCat, state);
+/* ✅ état des cases */
+function loadState(cat){
+  return data[cat].state || {};
+}
 
+/* 🔁 toggle case */
+function toggle(i){
+  let state = loadState(currentCat);
+
+  state[i] = !state[i];
+
+  data[currentCat].state = state;
+
+  saveData(data);
   render(currentCat);
 }
 
@@ -88,6 +94,7 @@ function addItem(){
 
   data[currentCat].items.push(name);
 
+  saveData(data);
   render(currentCat);
 }
 
