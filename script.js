@@ -1,7 +1,7 @@
-let defaultData = {
+let data = {
   valise: {
     title: "🧳 Valise",
-    items: ["👕 T-shirts","🩳 Shorts","🩱 Maillots de bain","🧦 Chaussettes"]
+    items: ["👕 T-shirts","🩳 Shorts","🩱 Maillots","🧦 Chaussettes"]
   },
   tente: {
     title: "⛺ Tente",
@@ -17,38 +17,37 @@ let defaultData = {
   }
 };
 
-/* 🔑 charger / sauvegarder TOUT */
-function getData(){
-  let saved = localStorage.getItem("vac_data");
-  return saved ? JSON.parse(saved) : structuredClone(defaultData);
-}
-
-function saveData(data){
-  localStorage.setItem("vac_data", JSON.stringify(data));
-}
-
-/* 📦 données globales */
-let data = getData();
 let currentCat = "";
 
-/* 📂 ouvrir catégorie */
+/* LOAD/SAVE */
+function getKey(cat){ return "vac_" + cat; }
+
+function load(cat){
+  return JSON.parse(localStorage.getItem(getKey(cat))) || {};
+}
+
+function save(cat, state){
+  localStorage.setItem(getKey(cat), JSON.stringify(state));
+}
+
+/* OPEN */
 function openCategory(cat){
   currentCat = cat;
-
   document.querySelector("main").style.display = "none";
   document.getElementById("page").classList.remove("hidden");
 
   document.getElementById("title").innerText = data[cat].title;
 
   render(cat);
+  updateGlobalProgress();
 }
 
-/* 📋 afficher liste */
+/* RENDER */
 function render(cat){
-  let state = loadState(cat);
+  let state = load(cat);
   let html = "";
 
-  data[cat].items.forEach((item, i) => {
+  data[cat].items.forEach((item,i)=>{
     html += `
       <div class="item">
         <label>
@@ -61,45 +60,55 @@ function render(cat){
     `;
   });
 
-  html += `
-    <button onclick="addItem()" style="margin-top:15px;">
-      ➕ Ajouter un objet
-    </button>
-  `;
+  html += `<button onclick="addItem()">➕ Ajouter un objet</button>`;
 
   document.getElementById("list").innerHTML = html;
 }
 
-/* ✅ état des cases */
-function loadState(cat){
-  return data[cat].state || {};
-}
-
-/* 🔁 toggle case */
+/* TOGGLE */
 function toggle(i){
-  let state = loadState(currentCat);
-
+  let state = load(currentCat);
   state[i] = !state[i];
+  save(currentCat, state);
 
-  data[currentCat].state = state;
-
-  saveData(data);
   render(currentCat);
+  updateGlobalProgress();
 }
 
-/* ➕ ajouter objet */
+/* ADD */
 function addItem(){
   let name = prompt("Ajouter un objet :");
   if(!name) return;
 
   data[currentCat].items.push(name);
 
-  saveData(data);
   render(currentCat);
+  updateGlobalProgress();
 }
 
-/* 🔙 retour */
+/* CLOSE */
 function closePage(){
   document.querySelector("main").style.display = "block";
   document.getElementById("page").classList.add("hidden");
+}
+
+/* PROGRESSION GLOBALE */
+function updateGlobalProgress(){
+  let total = 0;
+  let done = 0;
+
+  Object.keys(data).forEach(cat=>{
+    let state = load(cat);
+
+    data[cat].items.forEach((_,i)=>{
+      total++;
+      if(state[i]) done++;
+    });
+  });
+
+  let percent = total ? Math.round((done/total)*100) : 0;
+
+  document.getElementById("bar").style.width = percent + "%";
+  document.getElementById("progressText").innerText =
+    "Progression globale : " + percent + "%";
 }
