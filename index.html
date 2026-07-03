@@ -14,6 +14,12 @@
 <header>
   <h1>🌺 Ma liste de vacances 🌺</h1>
   <p>Prépare tes vacances tranquillement ☀️</p>
+
+  <!-- PROGRESSION GLOBALE -->
+  <div id="globalProgress">
+    <div id="bar"></div>
+  </div>
+  <p id="progressText"></p>
 </header>
 
 <main>
@@ -49,7 +55,6 @@
 
 <script src="script.js"></script>
 
-<!-- Service Worker (IMPORTANT : toujours en bas) -->
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
