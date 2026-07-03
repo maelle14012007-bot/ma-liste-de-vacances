@@ -1,8 +1,7 @@
 body{
   margin:0;
-  font-family: Arial;
-  background: linear-gradient(to bottom, #fff8f2, #fbeff5);
-  transition:0.3s;
+  font-family:Arial;
+  background:#fff8f2;
 }
 
 header{
@@ -12,15 +11,6 @@ header{
 
 h1{
   color:#8E6CCF;
-}
-
-button{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#8E6CCF;
-  color:white;
-  margin:5px;
 }
 
 .card{
@@ -36,12 +26,15 @@ button{
 
 #page{
   padding:20px;
-  animation: open 0.3s ease;
 }
 
-@keyframes open{
-  from{opacity:0; transform:scale(0.95);}
-  to{opacity:1; transform:scale(1);}
+button{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#8E6CCF;
+  color:white;
+  margin:5px;
 }
 
 .item{
@@ -49,10 +42,6 @@ button{
   margin:10px 0;
   padding:15px;
   border-radius:15px;
-}
-
-input[type="checkbox"]{
-  transform:scale(1.3);
 }
 
 /* PROGRESSION */
@@ -72,12 +61,7 @@ input[type="checkbox"]{
   transition:0.3s;
 }
 
-#progressText{
-  text-align:center;
-  color:#666;
-}
-
-/* DARK MODE */
+/* DARK */
 .dark{
   background:#121212;
   color:white;
@@ -87,18 +71,4 @@ input[type="checkbox"]{
 .dark .item{
   background:#1e1e1e;
   color:white;
-}
-
-/* CONFETTI */
-.confetti{
-  position:fixed;
-  top:-10px;
-  font-size:20px;
-  animation: fall 2s linear;
-}
-
-@keyframes fall{
-  to{
-    transform: translateY(100vh);
-  }
 }
