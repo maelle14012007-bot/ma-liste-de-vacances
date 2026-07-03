@@ -1,42 +1,19 @@
 let data = {
   valise: {
     title: "🧳 Valise",
-    items: [
-      "👕 T-shirts",
-      "🩳 Shorts",
-      "🩱 Maillots de bain",
-      "🧦 Chaussettes",
-      "👗 Robes",
-      "🧥 Pull"
-    ]
+    items: ["👕 T-shirts","🩳 Shorts","🩱 Maillots de bain","🧦 Chaussettes"]
   },
   tente: {
     title: "⛺ Tente",
-    items: [
-      "🏕️ Tente",
-      "🛏️ Matelas",
-      "🔦 Lampe",
-      "🪵 Sardines",
-      "🪢 Cordes"
-    ]
+    items: ["🏕️ Tente","🛏️ Matelas","🔦 Lampe"]
   },
   alimentaire: {
     title: "🍓 Alimentaire",
-    items: [
-      "🥖 Pain",
-      "🍝 Pâtes",
-      "🥤 Boissons",
-      "🍫 Snacks"
-    ]
+    items: ["🥖 Pain","🍫 Snacks","🥤 Boissons"]
   },
   divers: {
     title: "🐚 Divers",
-    items: [
-      "📱 Chargeur",
-      "🧴 Crème solaire",
-      "🕶️ Lunettes de soleil",
-      "💊 Trousse santé"
-    ]
+    items: ["📱 Chargeur","🧴 Crème solaire"]
   }
 };
 
@@ -50,8 +27,8 @@ function load(cat){
   return JSON.parse(localStorage.getItem(getKey(cat))) || {};
 }
 
-function save(cat, data){
-  localStorage.setItem(getKey(cat), JSON.stringify(data));
+function save(cat, val){
+  localStorage.setItem(getKey(cat), JSON.stringify(val));
 }
 
 function openCategory(cat){
@@ -67,44 +44,40 @@ function openCategory(cat){
 
 function render(cat){
   let state = load(cat);
-
   let html = "";
-  let total = data[cat].items.length;
-  let done = 0;
 
   data[cat].items.forEach((item, i) => {
-    if(state[i]) done++;
-
     html += `
       <div class="item">
         <label>
-          <input type="checkbox" ${state[i] ? "checked" : ""}
-          onchange="toggle(${i})">
+          <input type="checkbox" ${state[i] ? "checked" : ""} onchange="toggle(${i})">
           ${item}
         </label>
       </div>
     `;
   });
 
-  let percent = Math.round((done / total) * 100);
-
   html += `
-    <div style="margin-top:20px;">
-      <strong>Progression : ${percent}%</strong>
-      <div style="background:#eee; height:10px; border-radius:10px;">
-        <div style="width:${percent}%; height:10px; background:#8E6CCF; border-radius:10px;"></div>
-      </div>
-    </div>
+    <button onclick="addItem()" style="margin-top:15px;">
+      ➕ Ajouter un objet
+    </button>
   `;
 
   document.getElementById("list").innerHTML = html;
 }
 
-function toggle(index){
+function toggle(i){
   let state = load(currentCat);
-  state[index] = !state[index];
+  state[i] = !state[i];
   save(currentCat, state);
+  render(currentCat);
+}
 
+function addItem(){
+  let name = prompt("Ajouter un objet :");
+  if(!name) return;
+
+  data[currentCat].items.push(name);
   render(currentCat);
 }
 
