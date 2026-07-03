@@ -6,8 +6,9 @@
   <title>Ma liste de vacances</title>
 
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
-<link rel="manifest" href="manifest.json">
+
 <body>
 
 <header>
@@ -42,13 +43,18 @@
 <!-- PAGE CATÉGORIE -->
 <div id="page" class="hidden">
   <button onclick="closePage()">← Retour</button>
-
   <h2 id="title"></h2>
-
   <div id="list"></div>
 </div>
 
 <script src="script.js"></script>
+
+<!-- Service Worker (IMPORTANT : toujours en bas) -->
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
 
 </body>
 </html>
