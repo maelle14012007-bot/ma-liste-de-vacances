@@ -1,0 +1,63 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#FFF8F2;
+}
+
+header{
+    text-align:center;
+    padding:30px;
+}
+
+h1{
+    color:#8E6CCF;
+}
+
+p{
+    color:#666;
+}
+
+main{
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    margin-bottom:20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.25s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card h2{
+    margin:10px 0;
+    color:#8E6CCF;
+}
+
+.progress{
+    width:85%;
+    height:18px;
+    background:#eee;
+    border-radius:50px;
+    margin:auto;
+    overflow:hidden;
+}
+
+.barre{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#8E6CCF,#F7A8C6);
+}
+
+#pourcentage{
+    text-align:center;
+    margin:15px;
+    font-weight:bold;
+}
