@@ -40,19 +40,19 @@ let data = {
   }
 };
 
-function getStorageKey(cat){
-  return "vacances_" + cat;
-}
-
-function loadState(cat){
-  return JSON.parse(localStorage.getItem(getStorageKey(cat))) || {};
-}
-
-function saveState(cat, state){
-  localStorage.setItem(getStorageKey(cat), JSON.stringify(state));
-}
-
 let currentCat = "";
+
+function getKey(cat){
+  return "vac_" + cat;
+}
+
+function load(cat){
+  return JSON.parse(localStorage.getItem(getKey(cat))) || {};
+}
+
+function save(cat, data){
+  localStorage.setItem(getKey(cat), JSON.stringify(data));
+}
 
 function openCategory(cat){
   currentCat = cat;
@@ -62,30 +62,50 @@ function openCategory(cat){
 
   document.getElementById("title").innerText = data[cat].title;
 
-  let state = loadState(cat);
+  render(cat);
+}
 
-  let listHTML = "";
+function render(cat){
+  let state = load(cat);
 
-  data[cat].items.forEach((item, index) => {
-    let checked = state[index] ? "checked" : "";
+  let html = "";
+  let total = data[cat].items.length;
+  let done = 0;
 
-    listHTML += `
+  data[cat].items.forEach((item, i) => {
+    if(state[i]) done++;
+
+    html += `
       <div class="item">
         <label>
-          <input type="checkbox" onchange="toggleItem(${index})" ${checked}>
+          <input type="checkbox" ${state[i] ? "checked" : ""}
+          onchange="toggle(${i})">
           ${item}
         </label>
       </div>
     `;
   });
 
-  document.getElementById("list").innerHTML = listHTML;
+  let percent = Math.round((done / total) * 100);
+
+  html += `
+    <div style="margin-top:20px;">
+      <strong>Progression : ${percent}%</strong>
+      <div style="background:#eee; height:10px; border-radius:10px;">
+        <div style="width:${percent}%; height:10px; background:#8E6CCF; border-radius:10px;"></div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("list").innerHTML = html;
 }
 
-function toggleItem(index){
-  let state = loadState(currentCat);
+function toggle(index){
+  let state = load(currentCat);
   state[index] = !state[index];
-  saveState(currentCat, state);
+  save(currentCat, state);
+
+  render(currentCat);
 }
 
 function closePage(){
