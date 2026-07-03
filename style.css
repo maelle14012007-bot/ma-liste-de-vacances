@@ -1,63 +1,88 @@
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#FFF8F2;
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #fff8f2, #fbeff5);
+  color:#333;
 }
 
+/* HEADER */
 header{
-    text-align:center;
-    padding:30px;
+  text-align:center;
+  padding:25px 10px;
 }
 
 h1{
-    color:#8E6CCF;
+  margin:0;
+  color:#8E6CCF;
 }
 
 p{
-    color:#666;
+  margin:5px;
+  color:#777;
 }
 
+/* CARTES ACCUEIL */
 main{
-    padding:20px;
+  padding:15px;
 }
 
 .card{
-    background:white;
-    border-radius:25px;
-    padding:25px;
-    margin-bottom:20px;
-    text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-    transition:.25s;
-    cursor:pointer;
+  background:white;
+  margin:15px 0;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+  cursor:pointer;
+  transition:0.2s;
 }
 
 .card:hover{
-    transform:scale(1.03);
+  transform:scale(1.03);
 }
 
 .card h2{
-    margin:10px 0;
-    color:#8E6CCF;
+  margin:5px 0;
+  color:#8E6CCF;
 }
 
-.progress{
-    width:85%;
-    height:18px;
-    background:#eee;
-    border-radius:50px;
-    margin:auto;
-    overflow:hidden;
+/* PAGE INTERNE */
+.hidden{
+  display:none;
 }
 
-.barre{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#8E6CCF,#F7A8C6);
+#page{
+  padding:20px;
 }
 
-#pourcentage{
-    text-align:center;
-    margin:15px;
-    font-weight:bold;
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  background:#8E6CCF;
+  color:white;
+  cursor:pointer;
+}
+
+/* ITEMS CHECKLIST */
+.item{
+  background:white;
+  margin:10px 0;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+input[type="checkbox"]{
+  transform:scale(1.3);
+  margin-right:10px;
+}
+
+/* petite animation */
+.card, .item{
+  animation: fade 0.3s ease-in;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
 }
