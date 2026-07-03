@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌺 Ma liste de vacances 🌺</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+
+  <meta name="theme-color" content="#F7E8E8">
+</head>
+
+<body>
+
+<header>
+    <h1>🌺 Ma liste de vacances 🌺</h1>
+    <p>🥥 Prépare tes vacances en toute sérénité ☀️</p>
+</header>
+
+<main>
+
+<div class="card" onclick="ouvrir('valise')">
+    🧳
+    <h2>Valise</h2>
+    <span>Vêtements • Toilette • Premiers secours</span>
+</div>
+
+<div class="card" onclick="ouvrir('tente')">
+    ⛺
+    <h2>Tente</h2>
+    <span>Tout le matériel de camping</span>
+</div>
+
+<div class="card" onclick="ouvrir('alimentaire')">
+    🍓
+    <h2>Alimentaire</h2>
+    <span>Nourriture & Cuisine</span>
+</div>
+
+<div class="card" onclick="ouvrir('divers')">
+    🐚
+    <h2>Divers</h2>
+    <span>Le reste de tes affaires</span>
+</div>
+
+</main>
+
+<footer>
+
+<div class="progress">
+
+<div class="barre"></div>
+
+</div>
+
+<p id="pourcentage">0 % prêt 🌴</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
