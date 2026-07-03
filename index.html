@@ -1,62 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌺 Ma liste de vacances 🌺</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ma liste de vacances</title>
 
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
-
-  <meta name="theme-color" content="#F7E8E8">
 </head>
 
 <body>
 
 <header>
-    <h1>🌺 Ma liste de vacances 🌺</h1>
-    <p>🥥 Prépare tes vacances en toute sérénité ☀️</p>
+  <h1>🌺 Ma liste de vacances 🌺</h1>
+  <p>Prépare tes vacances tranquillement ☀️</p>
 </header>
 
 <main>
 
-<div class="card" onclick="ouvrir('valise')">
-    🧳
-    <h2>Valise</h2>
-    <span>Vêtements • Toilette • Premiers secours</span>
-</div>
+  <div class="card" onclick="openCategory('valise')">
+    🧳 <h2>Valise</h2>
+    <p>Vêtements • Toilette • Premiers secours</p>
+  </div>
 
-<div class="card" onclick="ouvrir('tente')">
-    ⛺
-    <h2>Tente</h2>
-    <span>Tout le matériel de camping</span>
-</div>
+  <div class="card" onclick="openCategory('tente')">
+    ⛺ <h2>Tente</h2>
+    <p>Matériel de camping</p>
+  </div>
 
-<div class="card" onclick="ouvrir('alimentaire')">
-    🍓
-    <h2>Alimentaire</h2>
-    <span>Nourriture & Cuisine</span>
-</div>
+  <div class="card" onclick="openCategory('alimentaire')">
+    🍓 <h2>Alimentaire</h2>
+    <p>Nourriture & cuisine</p>
+  </div>
 
-<div class="card" onclick="ouvrir('divers')">
-    🐚
-    <h2>Divers</h2>
-    <span>Le reste de tes affaires</span>
-</div>
+  <div class="card" onclick="openCategory('divers')">
+    🐚 <h2>Divers</h2>
+    <p>Autres affaires</p>
+  </div>
 
 </main>
 
-<footer>
+<!-- PAGE CATÉGORIE -->
+<div id="page" class="hidden">
+  <button onclick="closePage()">← Retour</button>
 
-<div class="progress">
+  <h2 id="title"></h2>
 
-<div class="barre"></div>
-
+  <div id="list"></div>
 </div>
-
-<p id="pourcentage">0 % prêt 🌴</p>
-
-</footer>
 
 <script src="script.js"></script>
 
