@@ -1,19 +1,68 @@
-function ouvrir(categorie) {
+let data = {
+  valise: {
+    title: "🧳 Valise",
+    items: [
+      "👕 T-shirts",
+      "🩳 Shorts",
+      "🩱 Maillots de bain",
+      "🧦 Chaussettes",
+      "👗 Robes",
+      "🧥 Pull"
+    ]
+  },
+  tente: {
+    title: "⛺ Tente",
+    items: [
+      "🏕️ Tente",
+      "🛏️ Matelas",
+      "🔦 Lampe",
+      "🪵 Sardines",
+      "🪢 Cordes"
+    ]
+  },
+  alimentaire: {
+    title: "🍓 Alimentaire",
+    items: [
+      "🥖 Pain",
+      "🍝 Pâtes",
+      "🥤 Boissons",
+      "🍫 Snacks"
+    ]
+  },
+  divers: {
+    title: "🐚 Divers",
+    items: [
+      "📱 Chargeur",
+      "🧴 Crème solaire",
+      "🕶️ Lunettes de soleil",
+      "💊 Trousse santé"
+    ]
+  }
+};
 
-    if(categorie=="valise"){
-        alert("🧳 Ouverture de la valise...\n\nVersion 1 en cours ❤️");
-    }
+function openCategory(cat){
+  document.querySelector("main").style.display = "none";
+  document.getElementById("page").classList.remove("hidden");
 
-    if(categorie=="tente"){
-        alert("⛺ Tente\n\nVersion 1 en cours ❤️");
-    }
+  document.getElementById("title").innerText = data[cat].title;
 
-    if(categorie=="alimentaire"){
-        alert("🍓 Alimentaire\n\nVersion 1 en cours ❤️");
-    }
+  let listHTML = "";
 
-    if(categorie=="divers"){
-        alert("🐚 Divers\n\nVersion 1 en cours ❤️");
-    }
+  data[cat].items.forEach((item, index) => {
+    listHTML += `
+      <div class="item">
+        <label>
+          <input type="checkbox">
+          ${item}
+        </label>
+      </div>
+    `;
+  });
 
+  document.getElementById("list").innerHTML = listHTML;
+}
+
+function closePage(){
+  document.querySelector("main").style.display = "block";
+  document.getElementById("page").classList.add("hidden");
 }
