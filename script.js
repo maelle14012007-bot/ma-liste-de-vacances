@@ -2,44 +2,42 @@ let data = {
   valise: {
     title: "🧳 Valise",
     sections: {
-      "👕 Vêtements": ["T-shirts", "Shorts", "Maillots"],
-      "🪥 Toilette": ["Brosse à dents", "Dentifrice", "Shampoing"],
-      "⛑️ Premiers secours": ["Pansements", "Désinfectant"]
+      "Vêtements": ["T-shirts","Shorts","Maillots"],
+      "Toilette": ["Brosse à dents","Dentifrice","Shampoing"],
+      "Premiers secours": ["Pansements","Désinfectant"]
     }
   },
 
   tente: {
     title: "⛺ Tente",
-    items: ["Tente", "Matelas", "Lampe"]
+    items: ["Tente","Matelas","Lampe"]
   },
 
   alimentaire: {
     title: "🍓 Alimentaire",
-    items: ["Pain", "Snacks", "Boissons"]
+    items: ["Pain","Snacks","Boissons"]
   },
 
   divers: {
     title: "🐚 Divers",
-    items: ["Chargeur", "Crème solaire"]
+    items: ["Chargeur","Crème solaire"]
   }
 };
 
-let currentCat = "";
+let current = "";
 
-/* STORAGE */
-function key(c){return "vac_"+c;}
-
-function load(c){
-  return JSON.parse(localStorage.getItem(key(c))) || {};
+/* storage */
+function load(k){
+  return JSON.parse(localStorage.getItem(k)) || {};
 }
 
-function save(c,d){
-  localStorage.setItem(key(c), JSON.stringify(d));
+function save(k,v){
+  localStorage.setItem(k, JSON.stringify(v));
 }
 
-/* OPEN */
+/* open */
 function openCategory(cat){
-  currentCat = cat;
+  current = cat;
 
   document.querySelector("main").style.display = "none";
   document.getElementById("page").classList.remove("hidden");
@@ -50,73 +48,66 @@ function openCategory(cat){
   updateProgress();
 }
 
-/* RENDER */
+/* render */
 function render(){
-  let state = load(currentCat);
+  let state = load(current);
   let html = "";
+  let cat = data[current];
 
-  let cat = data[currentCat];
-
-  /* CAS VALISE (avec sous-catégories) */
   if(cat.sections){
-    Object.keys(cat.sections).forEach(section=>{
-      html += `<h3>${section}</h3>`;
+    Object.keys(cat.sections).forEach(sec=>{
+      html += `<h3>${sec}</h3>`;
 
-      cat.sections[section].forEach((item,i)=>{
-        let id = section+"_"+i;
+      cat.sections[sec].forEach((item,i)=>{
+        let id = sec+i;
 
         html += `
-          <div class="item">
-            <label>
-              <input type="checkbox"
-                ${state[id] ? "checked" : ""}
-                onchange="toggle('${id}')">
-              ${item}
-            </label>
-          </div>
-        `;
+        <div class="item">
+          <label>
+            <input type="checkbox"
+            ${state[id] ? "checked":""}
+            onchange="toggle('${id}')">
+            ${item}
+          </label>
+        </div>`;
       });
     });
   }
 
-  /* CAS NORMAL */
   else{
     cat.items.forEach((item,i)=>{
       html += `
-        <div class="item">
-          <label>
-            <input type="checkbox"
-              ${state[i] ? "checked" : ""}
-              onchange="toggle(${i})">
-            ${item}
-          </label>
-        </div>
-      `;
+      <div class="item">
+        <label>
+          <input type="checkbox"
+          ${state[i] ? "checked":""}
+          onchange="toggle(${i})">
+          ${item}
+        </label>
+      </div>`;
     });
   }
 
   document.getElementById("list").innerHTML = html;
 }
 
-/* TOGGLE */
+/* toggle */
 function toggle(id){
-  let state = load(currentCat);
-
+  let state = load(current);
   state[id] = !state[id];
-
-  save(currentCat, state);
+  save(current,state);
 
   render();
   updateProgress();
 }
 
-/* CLOSE */
+/* close */
 function closePage(){
   document.querySelector("main").style.display = "block";
   document.getElementById("page").classList.add("hidden");
 }
 
-/* PROGRESSION */
+/* progress */
 function updateProgress(){
   let total=0,done=0;
 
@@ -128,7 +119,7 @@ function updateProgress(){
     if(c.sections){
       Object.keys(c.sections).forEach(sec=>{
         c.sections[sec].forEach((_,i)=>{
-          let id = sec+"_"+i;
+          let id = sec+i;
           total++;
           if(state[id]) done++;
         });
@@ -144,10 +135,10 @@ function updateProgress(){
   let p = total ? Math.round((done/total)*100) : 0;
 
   document.getElementById("bar").style.width = p+"%";
-  document.getElementById("progressText").innerText = "Progression : "+p+"%";
+  document.getElementById("progressText").innerText = p+"%";
 }
 
-/* DARK MODE */
+/* dark */
 function toggleDark(){
   document.body.classList.toggle("dark");
 }
