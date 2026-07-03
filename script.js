@@ -40,19 +40,39 @@ let data = {
   }
 };
 
+function getStorageKey(cat){
+  return "vacances_" + cat;
+}
+
+function loadState(cat){
+  return JSON.parse(localStorage.getItem(getStorageKey(cat))) || {};
+}
+
+function saveState(cat, state){
+  localStorage.setItem(getStorageKey(cat), JSON.stringify(state));
+}
+
+let currentCat = "";
+
 function openCategory(cat){
+  currentCat = cat;
+
   document.querySelector("main").style.display = "none";
   document.getElementById("page").classList.remove("hidden");
 
   document.getElementById("title").innerText = data[cat].title;
 
+  let state = loadState(cat);
+
   let listHTML = "";
 
   data[cat].items.forEach((item, index) => {
+    let checked = state[index] ? "checked" : "";
+
     listHTML += `
       <div class="item">
         <label>
-          <input type="checkbox">
+          <input type="checkbox" onchange="toggleItem(${index})" ${checked}>
           ${item}
         </label>
       </div>
@@ -60,6 +80,12 @@ function openCategory(cat){
   });
 
   document.getElementById("list").innerHTML = listHTML;
+}
+
+function toggleItem(index){
+  let state = loadState(currentCat);
+  state[index] = !state[index];
+  saveState(currentCat, state);
 }
 
 function closePage(){
