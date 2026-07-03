@@ -15,7 +15,8 @@
   <h1>🌺 Ma liste de vacances 🌺</h1>
   <p>Prépare tes vacances tranquillement ☀️</p>
 
-  <!-- PROGRESSION GLOBALE -->
+  <button onclick="toggleDark()">🌙 Mode</button>
+
   <div id="globalProgress">
     <div id="bar"></div>
   </div>
@@ -31,22 +32,22 @@
 
   <div class="card" onclick="openCategory('tente')">
     ⛺ <h2>Tente</h2>
-    <p>Matériel de camping</p>
+    <p>Camping</p>
   </div>
 
   <div class="card" onclick="openCategory('alimentaire')">
     🍓 <h2>Alimentaire</h2>
-    <p>Nourriture & cuisine</p>
+    <p>Nourriture</p>
   </div>
 
   <div class="card" onclick="openCategory('divers')">
     🐚 <h2>Divers</h2>
-    <p>Autres affaires</p>
+    <p>Autres</p>
   </div>
 
 </main>
 
-<!-- PAGE CATÉGORIE -->
+<!-- PAGE -->
 <div id="page" class="hidden">
   <button onclick="closePage()">← Retour</button>
   <h2 id="title"></h2>
