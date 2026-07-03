@@ -6,44 +6,28 @@
   <title>Ma liste de vacances</title>
 
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 
 <header>
   <h1>🌺 Ma liste de vacances 🌺</h1>
-  <p>Prépare tes affaires tranquillement ☀️</p>
 
-  <div id="globalProgress">
+  <div id="progressText"></div>
+  <div id="barContainer">
     <div id="bar"></div>
   </div>
-  <p id="progressText"></p>
 
-  <button onclick="toggleDark()">🌙 Mode</button>
+  <button onclick="toggleDark()">🌙</button>
 </header>
 
 <main>
-
-  <div class="card" onclick="openCategory('valise')">
-    🧳 <h2>Valise</h2>
-  </div>
-
-  <div class="card" onclick="openCategory('tente')">
-    ⛺ <h2>Tente</h2>
-  </div>
-
-  <div class="card" onclick="openCategory('alimentaire')">
-    🍓 <h2>Alimentaire</h2>
-  </div>
-
-  <div class="card" onclick="openCategory('divers')">
-    🐚 <h2>Divers</h2>
-  </div>
-
+  <div class="card" onclick="openCategory('valise')">🧳 Valise</div>
+  <div class="card" onclick="openCategory('tente')">⛺ Tente</div>
+  <div class="card" onclick="openCategory('alimentaire')">🍓 Alimentaire</div>
+  <div class="card" onclick="openCategory('divers')">🐚 Divers</div>
 </main>
 
-<!-- PAGE -->
 <div id="page" class="hidden">
   <button onclick="closePage()">← Retour</button>
   <h2 id="title"></h2>
@@ -51,12 +35,6 @@
 </div>
 
 <script src="script.js"></script>
-
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
 
 </body>
 </html>
