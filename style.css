@@ -1,45 +1,518 @@
-body{
-  margin:0;
-  font-family:Arial;
-  background:#fff7f2;
+/* =======================================
+   🌺 MA LISTE DE VACANCES
+   ======================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
+body{
+
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #FFEFD8 0%,
+        #FFF8F1 40%,
+        #FFE4EE 100%
+    );
+
+    color:#4A4A4A;
+
+    min-height:100vh;
+
+}
+
+/* HEADER */
 
 header{
-  text-align:center;
-  padding:15px;
+
+    text-align:center;
+
+    padding:30px 20px;
+
 }
 
-.card{
-  background:white;
-  margin:15px;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
-  cursor:pointer;
+header h1{
+
+    font-size:34px;
+
+    color:#E56B8A;
+
 }
 
-.hidden{display:none;}
+header p{
 
-#page{padding:20px;}
+    margin-top:10px;
+
+    color:#777;
+
+}
+
+/* BARRE */
+
+.progressContainer{
+
+    width:90%;
+
+    height:16px;
+
+    margin:20px auto;
+
+    background:white;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+}
+
+#progressBar{
+
+    height:100%;
+
+    width:0%;
+
+    background:linear-gradient(
+        90deg,
+        #FFB86B,
+        #FF6F91
+    );
+
+    transition:.4s;
+
+}
+
+#progressText{
+
+    font-weight:bold;
+
+    color:#666;
+
+}
+
+/* ACCUEIL */
+
+#home{
+
+    padding:20px;
+
+}
+
+.bigCard{
+
+    background:white;
+
+    border-radius:25px;
+
+    margin-bottom:25px;
+
+    padding:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+.bigCard:active{
+
+    transform:scale(.97);
+
+}
+
+.bigCard .emoji{
+
+    font-size:65px;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+.bigCard h2{
+
+    text-align:center;
+
+    color:#E56B8A;
+
+    margin-bottom:8px;
+
+}
+
+.bigCard p{
+
+    text-align:center;
+
+    color:#888;
+
+}
+
+/* PAGE */
+
+#categoryPage{
+
+    padding:20px;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.back{
+
+    background:#FF8FA3;
+
+    color:white;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:12px 20px;
+
+    font-size:16px;
+
+    margin-bottom:20px;
+
+}
+
+.back:active{
+
+    transform:scale(.96);
+
+}
+
+/* TITRES */
+
+#categoryTitle{
+
+    text-align:center;
+
+    color:#E56B8A;
+
+    margin-bottom:25px;
+
+}
+
+/* SOUS-CATEGORIES */
+
+.folder{
+
+    background:white;
+
+    border-radius:20px;
+
+    margin-bottom:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.folderTitle{
+
+    padding:18px;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    background:#FFF4F7;
+
+    cursor:pointer;
+
+}
+
+.folderContent{
+
+    display:none;
+
+    padding:15px;
+
+}
+
+.folder.open .folderContent{
+
+    display:block;
+
+}
+
+/* CHECKLIST */
 
 .item{
-  background:white;
-  margin:10px 0;
-  padding:10px;
-  border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:12px;
+
+    border-bottom:1px solid #eee;
+
 }
 
-/* progress */
-#barContainer{
-  width:90%;
-  height:10px;
-  background:#ddd;
-  margin:auto;
-  border-radius:10px;
+.item:last-child{
+
+    border-bottom:none;
+
 }
 
-#bar{
-  height:100%;
-  width:0%;
-  background:#8E6CCF;
+.item input{
+
+    width:22px;
+
+    height:22px;
+
+    margin-right:15px;
+
+    accent-color:#FF6F91;
+
 }
+
+.item label{
+
+    flex:1;
+
+}
+
+/* BOUTONS */
+
+.addButton{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:18px;
+
+    margin-top:20px;
+
+    background:#FF8FA3;
+
+    color:white;
+
+    font-size:17px;
+
+}
+
+.addButton:active{
+
+    transform:scale(.97);
+
+}
+/* =======================================
+   ANIMATIONS
+======================================= */
+
+@keyframes fadeIn {
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.bigCard{
+
+    animation:fadeIn .5s ease;
+
+}
+
+.folder{
+
+    animation:fadeIn .35s ease;
+
+}
+
+/* =======================================
+   CONFETTIS
+======================================= */
+
+#confetti{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    font-size:24px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+    z-index:999;
+
+}
+
+/* =======================================
+   MODE SOMBRE
+======================================= */
+
+body.dark{
+
+    background:#1d1d1d;
+
+    color:white;
+
+}
+
+body.dark header h1{
+
+    color:#FFAAC1;
+
+}
+
+body.dark header p{
+
+    color:#d6d6d6;
+
+}
+
+body.dark .bigCard{
+
+    background:#2b2b2b;
+
+    color:white;
+
+}
+
+body.dark .folder{
+
+    background:#2b2b2b;
+
+}
+
+body.dark .folderTitle{
+
+    background:#3a3a3a;
+
+    color:white;
+
+}
+
+body.dark .item{
+
+    border-bottom:1px solid #444;
+
+}
+
+body.dark .item label{
+
+    color:white;
+
+}
+
+body.dark .progressContainer{
+
+    background:#555;
+
+}
+
+body.dark .back{
+
+    background:#FF6F91;
+
+}
+
+body.dark .addButton{
+
+    background:#FF6F91;
+
+}
+
+/* =======================================
+   RESPONSIVE
+======================================= */
+
+@media(max-width:600px){
+
+header h1{
+
+    font-size:28px;
+
+}
+
+.bigCard{
+
+    padding:20px;
+
+}
+
+.bigCard .emoji{
+
+    font-size:55px;
+
+}
+
+.folderTitle{
+
+    font-size:18px;
+
+}
+
+}
+
+/* =======================================
+   OUVERTURE VALISE
+======================================= */
+
+.folderContent{
+
+    animation:fadeIn .3s ease;
+
+}
+
+/* =======================================
+   SCROLL
+======================================= */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#FFAAC1;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#FFF3F6;
+
+}
+
+/* =======================================
+   FIN DU CSS
+======================================= */
