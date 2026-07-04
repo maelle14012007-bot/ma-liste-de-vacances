@@ -1,40 +1,127 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ma liste de vacances</title>
 
-  <link rel="stylesheet" href="style.css">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🌺 Ma liste de vacances 🌺</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#f7cfd8">
+
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+
 </head>
 
 <body>
 
 <header>
-  <h1>🌺 Ma liste de vacances 🌺</h1>
 
-  <div id="progressText"></div>
-  <div id="barContainer">
-    <div id="bar"></div>
-  </div>
+<h1>🌺 Ma liste de vacances 🌺</h1>
 
-  <button onclick="toggleDark()">🌙</button>
+<p>Prépare tes vacances tranquillement ☀️</p>
+
+<div class="progressContainer">
+<div id="progressBar"></div>
+</div>
+
+<div id="progressText">0 % terminé</div>
+
 </header>
 
-<main>
-  <div class="card" onclick="openCategory('valise')">🧳 Valise</div>
-  <div class="card" onclick="openCategory('tente')">⛺ Tente</div>
-  <div class="card" onclick="openCategory('alimentaire')">🍓 Alimentaire</div>
-  <div class="card" onclick="openCategory('divers')">🐚 Divers</div>
+<main id="home">
+
+<div class="bigCard" onclick="openCategory('valise')">
+
+<div class="emoji">
+🧳
+</div>
+
+<h2>Valise</h2>
+
+<p>Documents • Vêtements • Toilette • Santé • Électronique</p>
+
+</div>
+
+
+<div class="bigCard" onclick="openCategory('tente')">
+
+<div class="emoji">
+⛺
+</div>
+
+<h2>Tente</h2>
+
+<p>Tout le matériel de camping</p>
+
+</div>
+
+
+<div class="bigCard" onclick="openCategory('alimentaire')">
+
+<div class="emoji">
+🍓
+</div>
+
+<h2>Alimentaire</h2>
+
+<p>Nourriture • Cuisine • Boissons</p>
+
+</div>
+
+
+<div class="bigCard" onclick="openCategory('divers')">
+
+<div class="emoji">
+🎒
+</div>
+
+<h2>Divers</h2>
+
+<p>Tout le reste</p>
+
+</div>
+
 </main>
 
-<div id="page" class="hidden">
-  <button onclick="closePage()">← Retour</button>
-  <h2 id="title"></h2>
-  <div id="list"></div>
+
+<section id="categoryPage" class="hidden">
+
+<button class="back" onclick="goHome()">
+
+← Retour
+
+</button>
+
+<h2 id="categoryTitle"></h2>
+
+<div id="categoryContent"></div>
+
+</section>
+
+
+<div id="confetti" class="hidden">
+
+🎉 Félicitations ! Tout est prêt ! 🎉
+
 </div>
+
 
 <script src="script.js"></script>
 
+<script>
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("service-worker.js");
+
+}
+
+</script>
+
 </body>
+
 </html>
