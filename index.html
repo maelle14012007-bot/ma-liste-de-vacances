@@ -1,47 +1,127 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checklist Vacances</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🌺 Ma liste de vacances 🌺</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#f7cfd8">
+
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+
 </head>
 
 <body>
 
-<!-- HOME -->
-<div id="home">
+<header>
 
-  <h1>🌺 Checklist Vacances</h1>
+<h1>🌺 Ma liste de vacances 🌺</h1>
 
-  <div class="grid">
+<p>Prépare tes vacances tranquillement ☀️</p>
 
-    <div class="card" onclick="openCategory('valise')">🧳 Valise</div>
-    <div class="card" onclick="openCategory('tente')">⛺ Tente</div>
-    <div class="card" onclick="openCategory('alimentaire')">🍓 Alimentaire</div>
-    <div class="card" onclick="openCategory('divers')">🎒 Divers</div>
+<div class="progressContainer">
+<div id="progressBar"></div>
+</div>
 
-  </div>
+<div id="progressText">0 % terminé</div>
+
+</header>
+
+<main id="home">
+
+<div class="bigCard" onclick="openCategory('valise')">
+
+<div class="emoji">
+🧳
+</div>
+
+<h2>Valise</h2>
+
+<p>Documents • Vêtements • Toilette • Santé • Électronique</p>
 
 </div>
 
-<!-- CATEGORY -->
-<div id="category" class="hidden">
 
-  <button onclick="goHome()">← Retour</button>
-  <h2 id="title"></h2>
+<div class="bigCard" onclick="openCategory('tente')">
 
-  <div id="subcats"></div>
+<div class="emoji">
+⛺
+</div>
 
-  <div id="list"></div>
+<h2>Tente</h2>
 
-  <div class="addBox">
-    <input id="newItem" placeholder="Ajouter un élément">
-    <button onclick="addItem()">+</button>
-  </div>
+<p>Tout le matériel de camping</p>
 
 </div>
+
+
+<div class="bigCard" onclick="openCategory('alimentaire')">
+
+<div class="emoji">
+🍓
+</div>
+
+<h2>Alimentaire</h2>
+
+<p>Nourriture • Cuisine • Boissons</p>
+
+</div>
+
+
+<div class="bigCard" onclick="openCategory('divers')">
+
+<div class="emoji">
+🎒
+</div>
+
+<h2>Divers</h2>
+
+<p>Tout le reste</p>
+
+</div>
+
+</main>
+
+
+<section id="categoryPage" class="hidden">
+
+<button class="back" onclick="goHome()">
+
+← Retour
+
+</button>
+
+<h2 id="categoryTitle"></h2>
+
+<div id="categoryContent"></div>
+
+</section>
+
+
+<div id="confetti" class="hidden">
+
+🎉 Félicitations ! Tout est prêt ! 🎉
+
+</div>
+
 
 <script src="script.js"></script>
+
+<script>
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("service-worker.js");
+
+}
+
+</script>
+
 </body>
+
 </html>
