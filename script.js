@@ -1,144 +1,251 @@
-let data = {
+/* =========================================
+   🌺 MA LISTE DE VACANCES — PRO MAX
+   ARCHITECTURE PROPRE (STATE CENTRAL)
+========================================= */
+
+let currentCategory = null;
+
+/* -----------------------------
+   DONNÉES FIXES (TA LISTE)
+------------------------------ */
+
+const data = {
+
   valise: {
     title: "🧳 Valise",
     sections: {
-      "Vêtements": ["T-shirts","Shorts","Maillots"],
-      "Toilette": ["Brosse à dents","Dentifrice","Shampoing"],
-      "Premiers secours": ["Pansements","Désinfectant"]
+      "📄 Documents": [
+        "Carte d'identité","Carte vitale","Permis","Carte bancaire","Espèces","Réservation camping","Assurance","Clés"
+      ],
+      "👕 Vêtements": [
+        "Sous-vêtements","Chaussettes","Pyjamas","T-shirts","Shorts","Robes","Maillots de bain","Chaussures"
+      ],
+      "🪥 Toilette & Santé": [
+        "Brosse à dents","Dentifrice","Shampoing","Gel douche","Déodorant","Crème solaire","Médicaments"
+      ],
+      "🔌 Électronique": [
+        "Téléphone","Chargeur","Écouteurs","Batterie externe"
+      ],
+      "🎒 Divers": [
+        "Livre","Jeux","Sac","Gourde"
+      ]
     }
   },
 
   tente: {
     title: "⛺ Tente",
-    items: ["Tente","Matelas","Lampe"]
+    items: [
+      "Tente","Matelas","Sacs de couchage","Lampe","Piquets","Corde"
+    ]
   },
 
   alimentaire: {
     title: "🍓 Alimentaire",
-    items: ["Pain","Snacks","Boissons"]
+    items: [
+      "Nourriture","Snacks","Eau","Pâtes","Riz","Saucisson"
+    ]
   },
 
   divers: {
-    title: "🐚 Divers",
-    items: ["Chargeur","Crème solaire"]
+    title: "🎒 Divers",
+    items: [
+      "Crème solaire","Lunettes","Casquette"
+    ]
   }
+
 };
+/* =========================================
+   RENDER PRINCIPAL
+========================================= */
 
-let current = "";
-
-/* storage */
-function load(k){
-  return JSON.parse(localStorage.getItem(k)) || {};
-}
-
-function save(k,v){
-  localStorage.setItem(k, JSON.stringify(v));
-}
-
-/* open */
 function openCategory(cat){
-  current = cat;
+    currentCategory = cat;
 
-  document.querySelector("main").style.display = "none";
-  document.getElementById("page").classList.remove("hidden");
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("categoryPage").classList.remove("hidden");
 
-  document.getElementById("title").innerText = data[cat].title;
+    document.getElementById("categoryTitle").innerText = data[cat].title;
 
-  render();
-  updateProgress();
+    render();
 }
 
-/* render */
+function goHome(){
+    document.getElementById("categoryPage").classList.add("hidden");
+    document.getElementById("home").classList.remove("hidden");
+
+    updateProgress();
+}
+
+/* =========================================
+   SAUVEGARDE
+========================================= */
+
+function loadState(){
+    return JSON.parse(localStorage.getItem("vacances_state")) || {};
+}
+
+function saveState(state){
+    localStorage.setItem("vacances_state", JSON.stringify(state));
+}
+
+/* état global unique (IMPORTANT = plus de bugs) */
+let state = loadState();
+
+/* =========================================
+   TOGGLE CHECKBOX
+========================================= */
+
+function toggle(key){
+
+    state[key] = !state[key];
+    saveState(state);
+
+    updateProgress();
+}
+
+/* =========================================
+   RENDER
+========================================= */
+
 function render(){
-  let state = load(current);
-  let html = "";
-  let cat = data[current];
 
-  if(cat.sections){
-    Object.keys(cat.sections).forEach(sec=>{
-      html += `<h3>${sec}</h3>`;
+    const container = document.getElementById("categoryContent");
+    container.innerHTML = "";
 
-      cat.sections[sec].forEach((item,i)=>{
-        let id = sec+i;
+    const cat = data[currentCategory];
 
-        html += `
-        <div class="item">
-          <label>
-            <input type="checkbox"
-            ${state[id] ? "checked":""}
-            onchange="toggle('${id}')">
-            ${item}
-          </label>
-        </div>`;
-      });
-    });
-  }
+    /* --------- SECTIONS (VALISE) --------- */
 
-  else{
-    cat.items.forEach((item,i)=>{
-      html += `
-      <div class="item">
-        <label>
-          <input type="checkbox"
-          ${state[i] ? "checked":""}
-          onchange="toggle(${i})">
-          ${item}
-        </label>
-      </div>`;
-    });
-  }
+    if(cat.sections){
 
-  document.getElementById("list").innerHTML = html;
-}
+        Object.keys(cat.sections).forEach(section=>{
 
-/* toggle */
-function toggle(id){
-  let state = load(current);
-  state[id] = !state[id];
-  save(current,state);
+            const folder = document.createElement("div");
+            folder.className = "folder";
 
-  render();
-  updateProgress();
-}
+            const title = document.createElement("div");
+            title.className = "folderTitle";
+            title.innerText = section;
 
-/* close */
-function closePage(){
-  document.querySelector("main").style.display = "block";
-  document.getElementById("page").classList.add("hidden");
-}
+            const content = document.createElement("div");
+            content.className = "folderContent";
 
-/* progress */
-function updateProgress(){
-  let total=0,done=0;
+            cat.sections[section].forEach((item,index)=>{
 
-  Object.keys(data).forEach(cat=>{
-    let state = load(cat);
+                const key = currentCategory+"_"+section+"_"+index;
 
-    let c = data[cat];
+                const row = document.createElement("div");
+                row.className = "item";
 
-    if(c.sections){
-      Object.keys(c.sections).forEach(sec=>{
-        c.sections[sec].forEach((_,i)=>{
-          let id = sec+i;
-          total++;
-          if(state[id]) done++;
+                row.innerHTML = `
+                    <label>
+                        <input type="checkbox"
+                        ${state[key] ? "checked" : ""}
+                        onchange="toggle('${key}')">
+                        ${item}
+                    </label>
+                `;
+
+                content.appendChild(row);
+
+            });
+
+            folder.appendChild(title);
+            folder.appendChild(content);
+
+            title.onclick = () => folder.classList.toggle("open");
+
+            container.appendChild(folder);
+
         });
-      });
-    } else {
-      c.items.forEach((_,i)=>{
-        total++;
-        if(state[i]) done++;
-      });
+
     }
-  });
 
-  let p = total ? Math.round((done/total)*100) : 0;
+    /* --------- SIMPLE LIST --------- */
 
-  document.getElementById("bar").style.width = p+"%";
-  document.getElementById("progressText").innerText = p+"%";
+    else{
+
+        cat.items.forEach((item,index)=>{
+
+            const key = currentCategory+"_"+index;
+
+            const row = document.createElement("div");
+            row.className = "item";
+
+            row.innerHTML = `
+                <label>
+                    <input type="checkbox"
+                    ${state[key] ? "checked" : ""}
+                    onchange="toggle('${key}')">
+                    ${item}
+                </label>
+            `;
+
+            container.appendChild(row);
+
+        });
+
+    }
 }
 
-/* dark */
-function toggleDark(){
-  document.body.classList.toggle("dark");
+/* =========================================
+   PROGRESSION
+========================================= */
+
+function updateProgress(){
+
+    let total = 0;
+    let done = 0;
+
+    Object.keys(data).forEach(cat=>{
+
+        const c = data[cat];
+
+        if(c.sections){
+
+            Object.keys(c.sections).forEach(section=>{
+
+                c.sections[section].forEach((_,i)=>{
+
+                    const key = cat+"_"+section+"_"+i;
+
+                    total++;
+                    if(state[key]) done++;
+
+                });
+
+            });
+
+        } else {
+
+            c.items.forEach((_,i)=>{
+
+                const key = cat+"_"+i;
+
+                total++;
+                if(state[key]) done++;
+
+            });
+
+        }
+
+    });
+
+    let percent = total ? Math.round((done/total)*100) : 0;
+
+    document.getElementById("progressBar").style.width = percent+"%";
+    document.getElementById("progressText").innerText = percent+" % terminé";
+
+    if(percent === 100){
+        document.getElementById("confetti").classList.remove("hidden");
+    }
+
 }
+
+/* =========================================
+   INIT
+========================================= */
+
+window.onload = () => {
+    updateProgress();
+};
