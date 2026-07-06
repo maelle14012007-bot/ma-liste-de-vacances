@@ -2,93 +2,67 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🌺 Ma liste de vacances 🌺</title>
+<title>🌺 Ma liste de vacances</title>
 
 <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#f7cfd8">
-
-<link rel="apple-touch-icon" href="assets/icon-192.png">
 
 </head>
 
 <body>
 
+<!-- ==========================
+ACCUEIL
+========================== -->
+
+<div id="homePage">
+
 <header>
 
-<h1>🌺 Ma liste de vacances 🌺</h1>
+<h1>🌺 Ma liste de vacances</h1>
 
-<p>Prépare tes vacances tranquillement ☀️</p>
-
-<div class="progressContainer">
-<div id="progressBar"></div>
-</div>
-
-<div id="progressText">0 % terminé</div>
+<p>Prépare tes vacances sans rien oublier 🌴☀️</p>
 
 </header>
 
-<main id="home">
+<div class="grid">
 
-<div class="bigCard" onclick="openCategory('valise')">
-
-<div class="emoji">
-🧳
-</div>
-
+<div class="card" onclick="openCategory('valise')">
+<div class="emoji">🧳</div>
 <h2>Valise</h2>
-
-<p>Documents • Vêtements • Toilette • Santé • Électronique</p>
-
+<p>Vêtements • Toilette • Électronique</p>
 </div>
 
-
-<div class="bigCard" onclick="openCategory('tente')">
-
-<div class="emoji">
-⛺
-</div>
-
+<div class="card" onclick="openCategory('tente')">
+<div class="emoji">⛺</div>
 <h2>Tente</h2>
-
-<p>Tout le matériel de camping</p>
-
+<p>Camping</p>
 </div>
 
-
-<div class="bigCard" onclick="openCategory('alimentaire')">
-
-<div class="emoji">
-🍓
-</div>
-
+<div class="card" onclick="openCategory('alimentaire')">
+<div class="emoji">🍓</div>
 <h2>Alimentaire</h2>
-
-<p>Nourriture • Cuisine • Boissons</p>
-
+<p>Nourriture</p>
 </div>
 
-
-<div class="bigCard" onclick="openCategory('divers')">
-
-<div class="emoji">
-🎒
-</div>
-
+<div class="card" onclick="openCategory('divers')">
+<div class="emoji">🎒</div>
 <h2>Divers</h2>
-
-<p>Tout le reste</p>
+<p>Documents & accessoires</p>
+</div>
 
 </div>
 
-</main>
+</div>
 
+<!-- ==========================
+PAGE CATÉGORIE
+========================== -->
 
-<section id="categoryPage" class="hidden">
+<div id="categoryPage" class="hidden">
 
 <button class="back" onclick="goHome()">
 
@@ -100,27 +74,67 @@
 
 <div id="categoryContent"></div>
 
-</section>
+</div>
 
+<!-- ==========================
+PAGE CHECKLIST
+========================== -->
 
-<div id="confetti" class="hidden">
+<div id="listPage" class="hidden">
 
-🎉 Félicitations ! Tout est prêt ! 🎉
+<button class="back" onclick="backToCategory()">
+
+← Retour
+
+</button>
+
+<h2 id="listTitle"></h2>
+
+<div id="checklist"></div>
+
+<div class="addBox">
+
+<input
+type="text"
+id="newItem"
+placeholder="Ajouter un objet">
+
+<button onclick="addItem()">
+
+Ajouter
+
+</button>
 
 </div>
 
+</div>
+<!-- ==========================
+BARRE DE PROGRESSION
+========================== -->
+
+<div id="progressContainer">
+
+    <div id="progressBar"></div>
+
+</div>
+
+<p id="progressText">
+
+0 % terminé
+
+</p>
+
+<!-- ==========================
+CONFETTIS
+========================== -->
+
+<div id="confetti" class="hidden">
+
+🎉🎉🎉
+
+</div>
 
 <script src="script.js"></script>
-
-<script>
-
-if("serviceWorker" in navigator){
-
-navigator.serviceWorker.register("service-worker.js");
-
-}
-
-</script>
 
 </body>
 
