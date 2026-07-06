@@ -1,6 +1,7 @@
-/* =======================================
+/* =========================================
    🌺 MA LISTE DE VACANCES
-   ======================================= */
+   STYLE.CSS - PARTIE 1
+========================================= */
 
 *{
     margin:0;
@@ -10,158 +11,123 @@
 
 body{
 
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 
-    background:linear-gradient(
-        180deg,
-        #FFEFD8 0%,
-        #FFF8F1 40%,
-        #FFE4EE 100%
-    );
+    background:linear-gradient(180deg,#fff8f5,#ffe9ef);
 
-    color:#4A4A4A;
+    color:#444;
 
     min-height:100vh;
 
 }
 
-/* HEADER */
+/* ======================
+   HEADER
+====================== */
 
 header{
 
     text-align:center;
 
-    padding:30px 20px;
+    padding:40px 20px;
 
 }
 
 header h1{
 
-    font-size:34px;
+    font-size:2rem;
 
-    color:#E56B8A;
+    color:#ff6f91;
+
+    margin-bottom:10px;
 
 }
 
 header p{
 
-    margin-top:10px;
-
     color:#777;
 
-}
-
-/* BARRE */
-
-.progressContainer{
-
-    width:90%;
-
-    height:16px;
-
-    margin:20px auto;
-
-    background:white;
-
-    border-radius:30px;
-
-    overflow:hidden;
-
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    font-size:1rem;
 
 }
 
-#progressBar{
+/* ======================
+   GRILLE
+====================== */
 
-    height:100%;
+.grid{
 
-    width:0%;
+    display:grid;
 
-    background:linear-gradient(
-        90deg,
-        #FFB86B,
-        #FF6F91
-    );
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 
-    transition:.4s;
-
-}
-
-#progressText{
-
-    font-weight:bold;
-
-    color:#666;
-
-}
-
-/* ACCUEIL */
-
-#home{
+    gap:20px;
 
     padding:20px;
 
+    max-width:900px;
+
+    margin:auto;
+
 }
 
-.bigCard{
+/* ======================
+   CARTES
+====================== */
+
+.card{
 
     background:white;
 
-    border-radius:25px;
-
-    margin-bottom:25px;
+    border-radius:22px;
 
     padding:25px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-    transition:.25s;
+    text-align:center;
 
     cursor:pointer;
 
-}
+    transition:.25s;
 
-.bigCard:active{
-
-    transform:scale(.97);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 }
 
-.bigCard .emoji{
+.card:hover{
 
-    font-size:65px;
+    transform:translateY(-6px);
 
-    text-align:center;
-
-    margin-bottom:15px;
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
 
 }
 
-.bigCard h2{
+.emoji{
 
-    text-align:center;
+    font-size:50px;
 
-    color:#E56B8A;
+    margin-bottom:12px;
+
+}
+
+.card h2{
+
+    color:#ff6f91;
 
     margin-bottom:8px;
 
 }
 
-.bigCard p{
+.card p{
 
-    text-align:center;
+    color:#777;
 
-    color:#888;
-
-}
-
-/* PAGE */
-
-#categoryPage{
-
-    padding:20px;
+    font-size:.9rem;
 
 }
+
+/* ======================
+   PAGES
+====================== */
 
 .hidden{
 
@@ -169,87 +135,73 @@ header p{
 
 }
 
-.back{
+#categoryPage,
+#listPage{
 
-    background:#FF8FA3;
+    padding:20px;
+
+}
+/* =========================================
+   STYLE.CSS - PARTIE 2
+========================================= */
+
+/* ===== Boutons ===== */
+
+.back,
+button{
+
+    background:#ff6f91;
 
     color:white;
 
     border:none;
 
-    border-radius:15px;
+    border-radius:14px;
 
-    padding:12px 20px;
-
-    font-size:16px;
-
-    margin-bottom:20px;
-
-}
-
-.back:active{
-
-    transform:scale(.96);
-
-}
-
-/* TITRES */
-
-#categoryTitle{
-
-    text-align:center;
-
-    color:#E56B8A;
-
-    margin-bottom:25px;
-
-}
-
-/* SOUS-CATEGORIES */
-
-.folder{
-
-    background:white;
-
-    border-radius:20px;
-
-    margin-bottom:20px;
-
-    overflow:hidden;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-
-}
-
-.folderTitle{
-
-    padding:18px;
-
-    font-size:19px;
-
-    font-weight:bold;
-
-    background:#FFF4F7;
+    padding:12px 18px;
 
     cursor:pointer;
 
-}
+    font-size:16px;
 
-.folderContent{
-
-    display:none;
-
-    padding:15px;
+    transition:.2s;
 
 }
 
-.folder.open .folderContent{
+button:hover,
+.back:hover{
 
-    display:block;
+    background:#ff4f7d;
 
 }
 
-/* CHECKLIST */
+/* ===== Sous-catégories ===== */
+
+.categoryButton{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin:15px 0;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.categoryButton:hover{
+
+    transform:scale(1.02);
+
+}
+
+/* ===== Checklist ===== */
 
 .item{
 
@@ -257,27 +209,19 @@ header p{
 
     align-items:center;
 
-    padding:12px;
+    justify-content:space-between;
 
-    border-bottom:1px solid #eee;
+    gap:10px;
 
-}
+    background:white;
 
-.item:last-child{
+    padding:15px;
 
-    border-bottom:none;
+    margin:12px 0;
 
-}
+    border-radius:16px;
 
-.item input{
-
-    width:22px;
-
-    height:22px;
-
-    margin-right:15px;
-
-    accent-color:#FF6F91;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 
 }
 
@@ -285,234 +229,100 @@ header p{
 
     flex:1;
 
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
 }
 
-/* BOUTONS */
+.item input[type="checkbox"]{
 
-.addButton{
+    width:22px;
 
-    width:100%;
+    height:22px;
 
-    padding:15px;
+}
+
+/* ===== Ajout ===== */
+
+.addBox{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+.addBox input{
+
+    flex:1;
 
     border:none;
 
-    border-radius:18px;
+    border-radius:14px;
 
-    margin-top:20px;
+    padding:14px;
 
-    background:#FF8FA3;
-
-    color:white;
-
-    font-size:17px;
-
-}
-
-.addButton:active{
-
-    transform:scale(.97);
-
-}
-/* =======================================
-   ANIMATIONS
-======================================= */
-
-@keyframes fadeIn {
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-.bigCard{
-
-    animation:fadeIn .5s ease;
-
-}
-
-.folder{
-
-    animation:fadeIn .35s ease;
-
-}
-
-/* =======================================
-   CONFETTIS
-======================================= */
-
-#confetti{
-
-    position:fixed;
-
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%,-50%);
+    font-size:16px;
 
     background:white;
 
-    padding:25px;
-
-    border-radius:20px;
-
-    font-size:24px;
-
-    box-shadow:0 15px 35px rgba(0,0,0,.15);
-
-    z-index:999;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 
 }
 
-/* =======================================
-   MODE SOMBRE
-======================================= */
+/* ===== Progression ===== */
 
-body.dark{
+#progressContainer{
 
-    background:#1d1d1d;
+    width:90%;
 
-    color:white;
+    height:16px;
 
-}
+    margin:30px auto 10px;
 
-body.dark header h1{
+    background:#f1d7de;
 
-    color:#FFAAC1;
+    border-radius:50px;
 
-}
-
-body.dark header p{
-
-    color:#d6d6d6;
+    overflow:hidden;
 
 }
 
-body.dark .bigCard{
+#progressBar{
 
-    background:#2b2b2b;
+    width:0%;
 
-    color:white;
+    height:100%;
 
-}
+    background:#ff6f91;
 
-body.dark .folder{
-
-    background:#2b2b2b;
+    transition:.3s;
 
 }
 
-body.dark .folderTitle{
+#progressText{
 
-    background:#3a3a3a;
+    text-align:center;
 
-    color:white;
+    color:#666;
 
-}
-
-body.dark .item{
-
-    border-bottom:1px solid #444;
+    margin-bottom:20px;
 
 }
 
-body.dark .item label{
+/* ===== Confettis ===== */
 
-    color:white;
+#confetti{
 
-}
+    text-align:center;
 
-body.dark .progressContainer{
+    font-size:40px;
 
-    background:#555;
-
-}
-
-body.dark .back{
-
-    background:#FF6F91;
+    margin:20px;
 
 }
-
-body.dark .addButton{
-
-    background:#FF6F91;
-
-}
-
-/* =======================================
-   RESPONSIVE
-======================================= */
-
-@media(max-width:600px){
-
-header h1{
-
-    font-size:28px;
-
-}
-
-.bigCard{
-
-    padding:20px;
-
-}
-
-.bigCard .emoji{
-
-    font-size:55px;
-
-}
-
-.folderTitle{
-
-    font-size:18px;
-
-}
-
-}
-
-/* =======================================
-   OUVERTURE VALISE
-======================================= */
-
-.folderContent{
-
-    animation:fadeIn .3s ease;
-
-}
-
-/* =======================================
-   SCROLL
-======================================= */
-
-::-webkit-scrollbar{
-
-    width:8px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:#FFAAC1;
-
-    border-radius:20px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:#FFF3F6;
-
-}
-
-/* =======================================
-   FIN DU CSS
-======================================= */
