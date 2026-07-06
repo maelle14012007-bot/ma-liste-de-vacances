@@ -1,87 +1,75 @@
 /* =========================================
    🌺 MA LISTE DE VACANCES
-   PARTIE 1
+   VERSION 1
 ========================================= */
 
-let currentCategory = "";
-let currentSection = "";
+let currentCategory = null;
+let currentSection = null;
 
-/* -----------------------------
+/* =========================================
    DONNÉES
------------------------------- */
+========================================= */
 
 const data = {
 
-    valise:{
+    valise: {
 
-        title:"🧳 Valise",
+        title: "🧳 Valise",
 
-        sections:{
-
-            "📄 Documents":[
-                "Carte d'identité",
-                "Carte vitale",
-                "Permis",
-                "Carte bancaire",
-                "Espèces",
-                "Réservation camping",
-                "Assurance",
-                "Clés"
-            ],
+        sections: {
 
             "👕 Vêtements":[
-                "Sous-vêtements",
-                "Chaussettes",
-                "Pyjamas",
-                "T-shirts",
-                "Débardeurs",
-                "Shorts",
-                "Jupes",
-                "Robes",
-                "Pantalons",
-                "Pull",
-                "Sweat",
-                "Veste",
-                "Maillots de bain",
-                "Serviette plage",
                 "Casquette",
+                "T-shirts",
+                "Pantalons / shorts",
+                "Sous-vêtements / chaussettes",
+                "Maillot de bain",
+                "Robes / Jupes",
+                "Vestes / Manteaux / Pull",
+                "Pyjama",
                 "Lunettes de soleil",
-                "Claquettes",
-                "Chaussures"
+                "Maillot spécial toboggan",
+                "Bonnet de bain"
             ],
 
             "🪥 Toilette & Santé":[
+                "Fibre / Laque / Crème cheveux",
+                "Peigne",
+                "Brosse",
+                "Éponge",
                 "Brosse à dents",
                 "Dentifrice",
-                "Brosse à cheveux",
-                "Déodorant",
-                "Gel douche",
-                "Shampoing",
-                "Après-shampoing",
-                "Rasoir",
-                "Cotons",
-                "Mouchoirs",
+                "Lentilles + produit",
                 "Crème solaire",
-                "Après-soleil",
-                "Doliprane",
-                "Pansements",
-                "Désinfectant"
+                "Crème corps",
+                "Shampoing",
+                "Gel douche",
+                "Masque",
+                "Déodorant",
+                "Parfum",
+                "Chouchou",
+                "Pince",
+                "Maquillage",
+                "Skin care",
+                "Faux cils",
+                "Médicaments",
+                "Serviettes hygiéniques",
+                "Tampons",
+                "Culotte de règles",
+                "Rasoir",
+                "Épilateur",
+                "Tondeuse",
+                "Lisseur",
+                "Sèche-cheveux",
+                "Protecteur chaleur"
             ],
 
             "🔌 Électronique & Chargeurs":[
                 "Téléphone",
                 "Chargeur téléphone",
-                "Montre",
-                "Chargeur montre",
-                "Batterie externe",
-                "Écouteurs"
-            ],
-
-            "🎒 Divers":[
-                "Livre",
-                "Jeux",
-                "Sac",
-                "Gourde"
+                "Adaptateur prise",
+                "Multiprise",
+                "Enceinte"
             ]
 
         }
@@ -89,406 +77,439 @@ const data = {
     },
 
     tente:{
+
         title:"⛺ Tente",
-        items:[]
+
+        items:[
+            "Tente",
+            "Matelas pneumatique",
+            "Gonfleur",
+            "Couverture",
+            "Draps",
+            "Oreiller",
+            "Caisse pliable",
+            "Fil à linge",
+            "Table",
+            "Chaises",
+            "Parasol",
+            "Lampe",
+            "Vaisselle",
+            "Lessive",
+            "Éponge",
+            "Liquide vaisselle",
+            "Miroir",
+            "Ventilateur",
+            "Pain de glace",
+            "Chauffe plat",
+            "Gaz",
+            "Glacière"
+        ]
+
     },
 
     alimentaire:{
+
         title:"🍓 Alimentaire",
-        items:[]
+
+        items:[
+            "Eau",
+            "Jus",
+            "Sucre",
+            "Sel",
+            "Poivre",
+            "Nutella",
+            "Chocolat en poudre",
+            "Conserves",
+            "Pâtes",
+            "Riz",
+            "Semoule",
+            "Céréales",
+            "Brioche",
+            "Pain de mie",
+            "Chips",
+            "Apéro"
+        ]
+
     },
 
     divers:{
+
         title:"🎒 Divers",
-        items:[]
+
+        items:[
+            "Papier d'identité",
+            "Carte grise",
+            "Réservations camping",
+            "Permis de conduire",
+            "Carte bancaire",
+            "Carte Vitale",
+            "Argent",
+            "Pelle et balayette",
+            "Carnet de notes",
+            "Stylo",
+            "Jeux de société",
+            "Gourdes",
+            "Spray anti moustique",
+            "Sac de plage",
+            "Serviette plage",
+            "Serviette douche",
+            "Gant",
+            "Ordinateur",
+            "Tablette",
+            "Chargeur ordinateur",
+            "Batterie externe",
+            "Casque",
+            "Écouteurs"
+        ]
+
     }
 
 };
 
-/* -----------------------------
+/* =========================================
    SAUVEGARDE
------------------------------- */
+========================================= */
 
-function load(category){
+const STORAGE_KEY = "vacances_app_v1";
 
-    return JSON.parse(
-        localStorage.getItem("vacances_"+category)
-    ) || {};
+function loadData(){
+
+    const save = localStorage.getItem(STORAGE_KEY);
+
+    if(save){
+
+        return JSON.parse(save);
+
+    }
+
+    return JSON.parse(JSON.stringify(data));
 
 }
 
-function save(category,state){
+let appData = loadData();
+
+function saveData(){
 
     localStorage.setItem(
-        "vacances_"+category,
-        JSON.stringify(state)
+        STORAGE_KEY,
+        JSON.stringify(appData)
     );
 
 }
 /* =========================================
-   PARTIE 2
+   NAVIGATION
 ========================================= */
-
-/* -----------------------------
-   OUVRIR UNE CATÉGORIE
------------------------------- */
 
 function openCategory(category){
 
     currentCategory = category;
+    currentSection = null;
 
-    document.getElementById("home").classList.add("hidden");
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("listPage").classList.add("hidden");
+
     document.getElementById("categoryPage").classList.remove("hidden");
 
     document.getElementById("categoryTitle").innerText =
-        data[category].title;
+        appData[category].title;
 
     renderCategory();
 
 }
 
-/* -----------------------------
-   RETOUR ACCUEIL
------------------------------- */
-
 function goHome(){
 
+    currentCategory = null;
+    currentSection = null;
+
     document.getElementById("categoryPage").classList.add("hidden");
-    document.getElementById("home").classList.remove("hidden");
+    document.getElementById("listPage").classList.add("hidden");
+
+    document.getElementById("homePage").classList.remove("hidden");
 
 }
 
-/* -----------------------------
-   AFFICHAGE
------------------------------- */
+function backToCategory(){
 
-function renderCategory(){
-
-    const container =
-        document.getElementById("categoryContent");
-
-    container.innerHTML = "";
-
-    const cat = data[currentCategory];
-
-    /* ---------- VALISE ---------- */
-
-    if(cat.sections){
-
-        Object.keys(cat.sections).forEach(section=>{
-
-            const folder=document.createElement("div");
-            folder.className="folder";
-
-            folder.innerHTML=`
-
-                <div class="folderTitle">
-
-                    ${section}
-
-                </div>
-
-                <div class="folderContent">
-
-                </div>
-
-            `;
-
-            folder.querySelector(".folderTitle")
-            .onclick=function(){
-
-                folder.classList.toggle("open");
-
-            };
-
-            const content=
-            folder.querySelector(".folderContent");
-
-            cat.sections[section].forEach(item=>{
-
-                content.innerHTML+=`
-
-                <div class="item">
-
-                    <label>
-
-                    <input
-                    type="checkbox">
-
-                    ${item}
-
-                    </label>
-
-                </div>
-
-                `;
-
-            });
-
-            container.appendChild(folder);
-
-        });
-
-    }
-
-    /* ---------- AUTRES ---------- */
-
-    else{
-
-        cat.items.forEach(item=>{
-
-            container.innerHTML+=`
-
-            <div class="item">
-
-                <label>
-
-                <input type="checkbox">
-
-                ${item}
-
-                </label>
-
-            </div>
-
-            `;
-
-        });
-
-    }
+    document.getElementById("listPage").classList.add("hidden");
+    document.getElementById("categoryPage").classList.remove("hidden");
 
 }
+
 /* =========================================
-   PARTIE 3
-   SAUVEGARDE + CHECKBOX + PROGRESSION
+   AFFICHAGE DES CATÉGORIES
 ========================================= */
-
-/* -----------------------------
-   ETAT (SAUVEGARDE)
------------------------------- */
-
-function getState(category){
-    return JSON.parse(localStorage.getItem("state_"+category)) || {};
-}
-
-function setState(category,state){
-    localStorage.setItem("state_"+category, JSON.stringify(state));
-}
-
-/* -----------------------------
-   TOGGLE CHECKBOX
------------------------------- */
-
-function toggleItem(key){
-
-    let state = getState(currentCategory);
-
-    state[key] = !state[key];
-
-    setState(currentCategory,state);
-
-    updateProgress();
-
-}
-
-/* -----------------------------
-   PROGRESSION
------------------------------- */
-
-function updateProgress(){
-
-    let total = 0;
-    let done = 0;
-
-    Object.keys(data).forEach(cat=>{
-
-        const c = data[cat];
-        const state = getState(cat);
-
-        if(c.sections){
-
-            Object.keys(c.sections).forEach(section=>{
-
-                c.sections[section].forEach((item,index)=>{
-
-                    const key = section+"_"+index;
-
-                    total++;
-
-                    if(state[key]) done++;
-
-                });
-
-            });
-
-        } else if(c.items){
-
-            c.items.forEach((item,index)=>{
-
-                total++;
-
-                if(state[index]) done++;
-
-            });
-
-        }
-
-    });
-
-    let percent = total ? Math.round((done/total)*100) : 0;
-
-    document.getElementById("progressBar").style.width = percent+"%";
-    document.getElementById("progressText").innerText = percent+" % terminé";
-
-    if(percent === 100){
-        document.getElementById("confetti").classList.remove("hidden");
-    }
-
-}
-/* =========================================
-   PARTIE 4
-   RENDER CORRIGÉ + CHECKBOX CONNECTÉES
-========================================= */
-
-/* -----------------------------
-   CLE UNIQUE POUR CHAQUE OBJET
------------------------------- */
-
-function getKey(section,index){
-    return section + "_" + index;
-}
-
-/* -----------------------------
-   AFFICHAGE CATÉGORIE (FIX)
------------------------------- */
 
 function renderCategory(){
 
     const container = document.getElementById("categoryContent");
+
     container.innerHTML = "";
 
-    const cat = data[currentCategory];
-    const state = getState(currentCategory);
-
-    /* =========================
-       VALISE (sections)
-    ========================= */
+    const cat = appData[currentCategory];
 
     if(cat.sections){
 
         Object.keys(cat.sections).forEach(section=>{
 
-            const folder = document.createElement("div");
-            folder.className = "folder";
+            const card = document.createElement("div");
 
-            const content = document.createElement("div");
-            content.className = "folderContent";
+            card.className = "categoryButton";
 
-            cat.sections[section].forEach((item,index)=>{
+            card.innerHTML = `<h3>${section}</h3>`;
 
-                const key = getKey(section,index);
+            card.onclick = ()=>{
 
-                const row = document.createElement("div");
-                row.className = "item";
+                currentSection = section;
 
-                row.innerHTML = `
-                    <label>
-                        <input type="checkbox"
-                        ${state[key] ? "checked" : ""}
-                        onchange="toggleItem('${key}')">
-                        ${item}
-                    </label>
-                `;
+                openList();
 
-                content.appendChild(row);
-
-            });
-
-            folder.innerHTML = `
-                <div class="folderTitle">${section}</div>
-            `;
-
-            folder.appendChild(content);
-
-            folder.querySelector(".folderTitle").onclick = () => {
-                folder.classList.toggle("open");
             };
 
-            container.appendChild(folder);
+            container.appendChild(card);
 
         });
 
-    }
+    }else{
 
-    /* =========================
-       AUTRES CATÉGORIES
-    ========================= */
+        currentSection = null;
 
-    else{
-
-        cat.items.forEach((item,index)=>{
-
-            const row = document.createElement("div");
-            row.className = "item";
-
-            row.innerHTML = `
-                <label>
-                    <input type="checkbox"
-                    ${state[index] ? "checked" : ""}
-                    onchange="toggleItem('${index}')">
-                    ${item}
-                </label>
-            `;
-
-            container.appendChild(row);
-
-        });
+        openList();
 
     }
 
 }
+
 /* =========================================
-   PARTIE 5
-   INIT + PROGRESSION + FINALISATION
+   OUVERTURE D'UNE CHECKLIST
 ========================================= */
 
-/* -----------------------------
-   UPDATE PROGRESS (COMPTE GLOBAL)
------------------------------- */
+function openList(){
 
-function updateProgress(){
+    document.getElementById("categoryPage").classList.add("hidden");
+    document.getElementById("listPage").classList.remove("hidden");
 
-    let total = 0;
-    let done = 0;
+    if(currentSection){
 
-    Object.keys(data).forEach(cat=>{
+        document.getElementById("listTitle").innerText=currentSection;
 
-        const c = data[cat];
-        const state = getState(cat);
+    }else{
 
-        if(c.sections){
+        document.getElementById("listTitle").innerText=
+            appData[currentCategory].title;
 
-            Object.keys(c.sections).forEach(section=>{
+    }
 
-                c.sections[section].forEach((item,index)=>{
+    renderChecklist();
 
-                    const key = section + "_" + index;
+}
+/* =========================================
+   AFFICHAGE DE LA CHECKLIST
+========================================= */
 
-                    total++;
+function getCurrentItems(){
 
-                    if(state[key]) done++;
+    if(currentSection){
+
+        return appData[currentCategory].sections[currentSection];
+
+    }
+
+    return appData[currentCategory].items;
+
+}
+
+function renderChecklist(){
+
+    const checklist = document.getElementById("checklist");
+
+    checklist.innerHTML = "";
+
+    const items = getCurrentItems();
+
+    items.forEach((item,index)=>{
+
+        const row = document.createElement("div");
+        row.className = "item";
+
+        const checked = item.checked ? "checked" : "";
+
+        row.innerHTML = `
+
+        <label>
+
+            <input
+                type="checkbox"
+                ${checked}
+                onchange="toggleItem(${index})">
+
+            <span>${item.text}</span>
+
+        </label>
+
+        <div>
+
+            <button onclick="editItem(${index})">
+                ✏️
+            </button>
+
+            <button onclick="deleteItem(${index})">
+                🗑️
+            </button>
+
+        </div>
+
+        `;
+
+        checklist.appendChild(row);
+
+    });
+
+}
+
+/* =========================================
+   COCHER / DÉCOCHER
+========================================= */
+
+function toggleItem(index){
+
+    const items = getCurrentItems();
+
+    items[index].checked = !items[index].checked;
+
+    saveData();
+
+    renderChecklist();
+
+}
+
+/* =========================================
+   AJOUT D'UN OBJET
+========================================= */
+
+function addItem(){
+
+    const input = document.getElementById("newItem");
+
+    const value = input.value.trim();
+
+    if(value==="") return;
+
+    const items = getCurrentItems();
+
+    items.push({
+
+        text:value,
+
+        checked:false
+
+    });
+
+    input.value="";
+
+    saveData();
+
+    renderChecklist();
+
+}
+/* =========================================
+   MODIFIER UN OBJET
+========================================= */
+
+function editItem(index){
+
+    const items = getCurrentItems();
+
+    const nouveau = prompt(
+        "Modifier l'objet :",
+        items[index].text
+    );
+
+    if(nouveau === null) return;
+
+    if(nouveau.trim() === "") return;
+
+    items[index].text = nouveau.trim();
+
+    saveData();
+
+    renderChecklist();
+
+}
+
+/* =========================================
+   SUPPRIMER UN OBJET
+========================================= */
+
+function deleteItem(index){
+
+    const items = getCurrentItems();
+
+    if(confirm("Supprimer cet objet ?")){
+
+        items.splice(index,1);
+
+        saveData();
+
+        renderChecklist();
+
+    }
+
+}
+
+/* =========================================
+   CONVERSION DES LISTES
+========================================= */
+
+function convertData(){
+
+    Object.keys(appData).forEach(category=>{
+
+        const cat = appData[category];
+
+        if(cat.sections){
+
+            Object.keys(cat.sections).forEach(section=>{
+
+                cat.sections[section] =
+                cat.sections[section].map(item=>{
+
+                    if(typeof item === "string"){
+
+                        return{
+
+                            text:item,
+                            checked:false
+
+                        };
+
+                    }
+
+                    return item;
 
                 });
 
             });
 
-        } else {
+        }
 
-            c.items.forEach((item,index)=>{
+        else{
 
-                total++;
+            cat.items =
+            cat.items.map(item=>{
 
-                if(state[index]) done++;
+                if(typeof item === "string"){
+
+                    return{
+
+                        text:item,
+                        checked:false
+
+                    };
+
+                }
+
+                return item;
 
             });
 
@@ -496,81 +517,103 @@ function updateProgress(){
 
     });
 
-    let percent = total ? Math.round((done/total)*100) : 0;
+    saveData();
 
-    document.getElementById("progressBar").style.width = percent + "%";
-    document.getElementById("progressText").innerText = percent + " % terminé";
+}
 
-    if(percent === 100){
+/* =========================================
+   INITIALISATION
+========================================= */
 
-        document.getElementById("confetti").classList.remove("hidden");
+window.onload = ()=>{
 
+    convertData();
+
+    goHome();
+
+};
+/* =========================================
+   PROGRESSION
+========================================= */
+
+function updateProgress(){
+
+    let total = 0;
+    let checked = 0;
+
+    Object.values(appData).forEach(cat=>{
+
+        if(cat.sections){
+
+            Object.values(cat.sections).forEach(section=>{
+
+                section.forEach(item=>{
+
+                    total++;
+
+                    if(item.checked){
+                        checked++;
+                    }
+
+                });
+
+            });
+
+        }else{
+
+            cat.items.forEach(item=>{
+
+                total++;
+
+                if(item.checked){
+                    checked++;
+                }
+
+            });
+
+        }
+
+    });
+
+    const percent = total === 0 ? 0 : Math.round((checked/total)*100);
+
+    const bar = document.getElementById("progressBar");
+    const text = document.getElementById("progressText");
+
+    if(bar){
+        bar.style.width = percent + "%";
+    }
+
+    if(text){
+        text.innerText = percent + "% terminé";
     }
 
 }
 
-/* -----------------------------
-   INIT APP
------------------------------- */
+/* =========================================
+   SAUVEGARDE
+========================================= */
 
-function initApp(){
+const oldSave = saveData;
 
-    updateProgress();
+saveData = function(){
 
-}
-
-/* -----------------------------
-   RETOUR HOME
------------------------------- */
-
-function goHome(){
-
-    document.getElementById("categoryPage").classList.add("hidden");
-    document.getElementById("home").classList.remove("hidden");
+    oldSave();
 
     updateProgress();
 
-}
+};
 
-/* -----------------------------
-   OPEN CATEGORY (SAFE)
------------------------------- */
+/* =========================================
+   INITIALISATION
+========================================= */
 
-function openCategory(category){
+window.onload = ()=>{
 
-    currentCategory = category;
-
-    document.getElementById("home").classList.add("hidden");
-    document.getElementById("categoryPage").classList.remove("hidden");
-
-    document.getElementById("categoryTitle").innerText = data[category].title;
-
-    renderCategory();
-
-}
-
-/* -----------------------------
-   TOGGLE CHECKBOX (SAFE)
------------------------------- */
-
-function toggleItem(key){
-
-    const state = getState(currentCategory);
-
-    state[key] = !state[key];
-
-    setState(currentCategory,state);
+    convertData();
 
     updateProgress();
 
-}
-
-/* -----------------------------
-   AUTO START
------------------------------- */
-
-window.onload = function(){
-
-    initApp();
+    goHome();
 
 };
